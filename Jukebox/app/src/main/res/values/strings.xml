@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">Jukebox</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="server_post">http://10.27.56.196:3000/postaiurea</string>
+    <string name="server_get">http://10.27.56.196:3000/</string>
+    <string name="server_url_hint">Server URL</string>
     <string name="action_settings">Settings</string>
+    <string name="submit">Submit</string>
 
 </resources>
