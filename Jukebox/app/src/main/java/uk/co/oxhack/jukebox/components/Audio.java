@@ -30,4 +30,8 @@ public class Audio {
         return artist;
     }
 
+    public String[] toListEntry() {
+        return new String[] { name, artist };
+    }
+
 }
