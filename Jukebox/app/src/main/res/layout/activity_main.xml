@@ -9,19 +9,27 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/input_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/server_url_hint"
-        android:layout_marginBottom="20dp"
-        android:maxLength="24"/>
+    <TextView
+        android:id="@+id/textDump"
+        android:gravity="left"
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:text=""/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:onClick="serverPost"
         android:text="@string/submit"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="loadAudio"
+        android:text="@string/load"/>
 
 </RelativeLayout>

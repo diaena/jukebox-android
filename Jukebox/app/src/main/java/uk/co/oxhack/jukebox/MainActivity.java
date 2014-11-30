@@ -1,34 +1,17 @@
 package uk.co.oxhack.jukebox;
 
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
+
+import uk.co.oxhack.jukebox.components.Audio;
+import uk.co.oxhack.jukebox.managers.DataManager;
+import uk.co.oxhack.jukebox.managers.HTTPManager;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -37,7 +20,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,57 +45,21 @@ public class MainActivity extends ActionBarActivity {
     public void serverPost(View v) {
         String url = getResources().getString(R.string.server_post);
 
-        sendPostRequest("Yo!", url);
+        HTTPManager.SendPostRequest(getApplicationContext(), url, "Yo!");
     }
 
-    private void sendPostRequest(String message, String url) {
+    public void loadAudio(View v) {
+        TextView textView = (TextView)findViewById(R.id.textDump);
+        ArrayList<Audio> audioList = DataManager.getAudio(getApplicationContext());
 
-        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected String doInBackground(String... params) {
-                // Loads the parameters.
-                String message = params[0];
-                String url = params[1];
-
-                // Initiates the connection.
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(url);
-
-                try {
-                    httpPost.setEntity(new StringEntity(message));
-
-                    try {
-                        // Executes the httpPost.
-                        HttpResponse httpResponse = httpClient.execute(httpPost);
-
-                        // Returns a message.
-                        InputStream inputStream = httpResponse.getEntity().getContent();
-                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                        StringBuilder stringBuilder = new StringBuilder();
-                        String value = null;
-
-                        while ((value = bufferedReader.readLine()) != null) {
-                            stringBuilder.append(value);
-                        }
-
-                        return stringBuilder.toString();
-                    } catch (ClientProtocolException e) {
-                        MessageBox.show(getApplicationContext(), e.getMessage());
-                    } catch (IOException e) {
-                        MessageBox.show(getApplicationContext(), e.getMessage());
-                    }
-
-                } catch (UnsupportedEncodingException e) {
-                    MessageBox.show(getApplicationContext(), e.getMessage());
-                }
-
-                return null;
-            }
+        for (Audio audio : audioList) {
+            textView.setText(textView.getText()
+                    + audio.getPath() + "; "
+                    + audio.getName() + "; "
+                    + audio.getAlbum() + "; "
+                    + audio.getArtist() + "; "
+                    + System.getProperty("line.separator"));
         }
-
-        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
-        sendPostReqAsyncTask.execute(message, url);
     }
+
 }
