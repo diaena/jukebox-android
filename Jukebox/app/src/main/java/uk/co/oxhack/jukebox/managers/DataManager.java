@@ -10,6 +10,8 @@ import uk.co.oxhack.jukebox.components.Audio;
 
 public class DataManager {
 
+    private static String orderBy = MediaStore.Audio.Media.DISPLAY_NAME;
+
     private static Cursor initiateAudioQuery(Context context) {
         return context.getContentResolver().query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -17,7 +19,10 @@ public class DataManager {
                         MediaStore.Audio.Media.DATA,
                         MediaStore.Audio.Media.ARTIST,
                         MediaStore.Audio.Media.ALBUM,
-                        MediaStore.Audio.Media.DISPLAY_NAME }, "1 = 1", null, null);
+                        MediaStore.Audio.Media.DISPLAY_NAME },
+                MediaStore.Audio.Media.IS_MUSIC,
+                null,
+                orderBy);
     }
 
     public static boolean isSDPresent() {
@@ -30,6 +35,14 @@ public class DataManager {
         }
 
         return 0;
+    }
+
+    public static String getOrderBy() {
+        return orderBy;
+    }
+
+    public static void setOrderBy(String value) {
+        orderBy = value;
     }
 
     public static ArrayList<Audio> getAudio(Context context) {
