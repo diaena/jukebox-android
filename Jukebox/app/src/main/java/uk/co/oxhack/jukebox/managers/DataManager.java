@@ -10,6 +10,7 @@ import uk.co.oxhack.jukebox.components.Audio;
 
 public class DataManager {
 
+    private static ArrayList<Audio> audioList;
     private static String orderBy = MediaStore.Audio.Media.DISPLAY_NAME;
 
     private static Cursor initiateAudioQuery(Context context) {
@@ -17,9 +18,11 @@ public class DataManager {
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 new String[] { MediaStore.Audio.Media._ID,
                         MediaStore.Audio.Media.DATA,
-                        MediaStore.Audio.Media.ARTIST,
+                        MediaStore.Audio.Media.DISPLAY_NAME,
                         MediaStore.Audio.Media.ALBUM,
-                        MediaStore.Audio.Media.DISPLAY_NAME },
+                        MediaStore.Audio.Media.ARTIST,
+                        MediaStore.Audio.Media.DURATION,
+                        MediaStore.Audio.Media.DATE_MODIFIED},
                 MediaStore.Audio.Media.IS_MUSIC,
                 null,
                 orderBy);
@@ -41,13 +44,17 @@ public class DataManager {
         return orderBy;
     }
 
+    public static ArrayList<Audio> getAudioList() {
+        return audioList;
+    }
+
     public static void setOrderBy(String value) {
         orderBy = value;
     }
 
-    public static ArrayList<Audio> getAudio(Context context) {
+    public static ArrayList<Audio> fetchAudio(Context context) {
         // Initializes the audio list.
-        ArrayList<Audio> audioList = new ArrayList<Audio>();
+        audioList = new ArrayList<Audio>();
 
         // Continues only if the SD is present.
         if (isSDPresent()) {
@@ -60,7 +67,9 @@ public class DataManager {
                                 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
                                 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)),
                                 cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)),
-                                cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+                                cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
+                                cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
+                                cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED))
                         );
 
                         audioList.add(audio);

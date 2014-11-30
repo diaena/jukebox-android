@@ -2,7 +2,13 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorTertiary">#46ffc6</item>
+        <item name="android:listViewStyle">@style/ListView</item>
+    </style>
+
+    <style name="ListView">
+        <item name="android:background">#797979</item>
     </style>
 
 </resources>

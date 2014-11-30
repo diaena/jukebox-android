@@ -6,12 +6,16 @@ public class Audio {
     private final String name;
     private final String album;
     private final String artist;
+    private final String duration;
+    private final String dateModified;
 
-    public Audio(String path, String name, String album, String artist) {
+    public Audio(String path, String name, String album, String artist, String duration, String dateModified) {
         this.path = path;
         this.name = name;
         this.album = album;
         this.artist = artist;
+        this.duration = duration;
+        this.dateModified = dateModified;
     }
 
     public String getPath() {
@@ -30,8 +34,8 @@ public class Audio {
         return artist;
     }
 
-    public String[] toListEntry() {
-        return new String[] { name, artist };
-    }
+    public String getDuration() { return duration; }
+
+    public String getDateModified() { return dateModified; }
 
 }

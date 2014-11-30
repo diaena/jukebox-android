@@ -1,6 +1,7 @@
 package uk.co.oxhack.jukebox.components;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +53,38 @@ public class PlaylistAdapter extends BaseAdapter {
         TextView text1 = twoLineListItem.getText1();
         TextView text2 = twoLineListItem.getText2();
 
+        // Sets the name.
         text1.setText(audioList.get(position).getName());
-        text2.setText(audioList.get(position).getArtist());
+
+        // Sets the album.
+        String album = audioList.get(position).getAlbum();
+
+        if (!album.equals(MediaStore.UNKNOWN_STRING)) {
+            text2.setText(album);
+        }
+
+        // Sets the artist.
+        String artist = audioList.get(position).getArtist();
+
+        if (!artist.equals(MediaStore.UNKNOWN_STRING)) {
+            if (text2.length() > 0) {
+                text2.append(System.getProperty("line.separator") + artist);
+            } else {
+                text2.setText(artist);
+            }
+        }
+
+        // Sets the duration.
+        String duration = audioList.get(position).getDuration();
+
+        // Changes duration from milliseconds to seconds.
+        duration = String.valueOf(Double.parseDouble(duration) / 1000) + 's';
+
+        if (text2.length() > 0) {
+            text2.append(System.getProperty("line.separator") + duration);
+        } else {
+            text2.setText(duration);
+        }
 
         return twoLineListItem;
     }

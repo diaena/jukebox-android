@@ -2,11 +2,13 @@
 <resources>
 
     <string name="app_name">Jukebox</string>
-    <string name="server_post">http://10.27.56.196:3000/postaiurea</string>
-    <string name="server_get">http://10.27.56.196:3000/</string>
+    <string name="server_post">http://192.168.10.1:3000/add</string>
+    <string name="server_get">undefined</string>
     <string name="server_url_hint">Server URL</string>
-    <string name="action_settings">Settings</string>
-    <string name="submit">Submit</string>
-    <string name="load">Load</string>
+    <string name="action_name">By Name</string>
+    <string name="action_album">By Album</string>
+    <string name="action_artist">By Artist</string>
+    <string name="action_duration">By Duration</string>
+    <string name="action_date">By Date Modified</string>
 
 </resources>
